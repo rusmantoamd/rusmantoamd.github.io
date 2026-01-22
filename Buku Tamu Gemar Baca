@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Public Guest Book</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 30px;
+        }
+        .container {
+            background: #fff;
+            max-width: 500px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 8px;
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        button {
+            background: #2b7cff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1f5fd1;
+        }
+        .success {
+            color: green;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Buku Tamu Perpustakaan Gemar Baca Pulisen</h2>
+
+    <form id="guestForm">
+        <input type="text" name="name" placeholder="Nama" required>
+        <input type="text" name="origin" placeholder="Alamat" required>
+        <input type="text" name="purpose" placeholder="Keperluan" required>
+        <textarea name="message" placeholder="Kesan/Saran"></textarea>
+        <button type="submit">Masuk</button>
+    </form>
+
+    <div class="success" id="status"></div>
+</div>
+
+<script>
+const form = document.getElementById("guestForm");
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const data = {
+        name: form.name.value,
+        origin: form.origin.value,
+        origin: form.age.value,
+        origin: form.gender.value,
+        purpose: form.purpose.value,
+        message: form.message.value
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbyffv3kjpD3d2rZCph4ng1-I61fDef_oYIK3jSxpDvkppzENOgnYVeLgFsb_QM0Am2Ong/exec", {
+        method: "POST",
+        body: JSON.stringify(data)
+    })
+    .then(response => response.text())
+    .then(result => {
+        document.getElementById("status").innerText = "Thank you for signing our guest book!";
+        form.reset();
+    })
+    .catch(error => {
+        document.getElementById("status").innerText = "Error. Please try again.";
+    });
+});
+</script>
+
+</body>
+</html>
